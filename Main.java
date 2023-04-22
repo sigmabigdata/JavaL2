@@ -1,32 +1,39 @@
-// Реализуйте алгоритм сортировки пузырьком числового массива, результат после каждой итерации запишите в лог-файл.
-import java.io.IOException;
-import java.util.logging.*;
-public class task2 {
-    public static void main(String[] args) throws IOException {
-        Logger logger = Logger.getLogger(task2.class.getName());
-        FileHandler fh = new FileHandler("logTask2.xml");
-        logger.addHandler(fh);
-        XMLFormatter xml = new XMLFormatter();
-        fh.setFormatter(xml);
-        logger.info("Sort Array");
-        int [] array = {2, 5, 1, -7, 3, 64, 0};
-        lib.printArrayInt(array);
-        int[] newArr = listSort(array);
-        System.out.printf("\n Отсортированный массив: \n");
-        lib.printArrayInt(newArr);
-    }
-    public static int[] listSort(int [] arr){
-        for(int k = 0; k < arr.length-1; k++) {
+package org.example;
 
-            for (int i = 0; i < arr.length - k-1; i++){
-                if (arr[i] > arr[i+1]) {
-                    int temp = arr[i];
-                    arr[i] = arr[i+1];
-                    arr[i+1] = temp;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Arrays;
+import java.util.logging.Logger;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(
+                "C:\\Users\\CRAFT_PC\\IdeaProjects\\Task1\\src\\test.txt"));
+        String test = bufferedReader.readLine();
+
+        String[] result = test.split(",");
+        StringBuilder sb = new StringBuilder("SELECT * FROM students WHERE");
+        for (String element: result) {
+            String[] fieldAndValue = element.split(":");
+            String field = fieldAndValue[0]
+                    .replaceAll("\\{|\"| ", "");
+            String value = fieldAndValue[1].replaceAll("}| ", "");
+            if (!value.equals("\"null\"")) {
+                if (sb.lastIndexOf("=") != -1) {
+                    sb.append(" AND");
                 }
+                sb.append(" " + field + " = " + value);
             }
         }
-        return arr;
+        System.out.println(sb);
+
+
+
+
+
     }
 
 }
